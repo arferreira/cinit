@@ -1,0 +1,6 @@
+# compiled binary
+cinit
+
+*.o 
+
+.DS_Store
