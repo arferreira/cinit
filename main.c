@@ -127,7 +127,6 @@ int main(int argc, char *argv[]) {
         return 1;
       }
 
-      // initialize git repo (best-effort; .gitignore is already in place)
       char git_cmd[512];
       snprintf(git_cmd, sizeof(git_cmd), "git -C %s init -b main", argv[2]);
       system(git_cmd);
