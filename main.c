@@ -2,6 +2,7 @@
 // Author: Antonio Souza
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 
@@ -125,6 +126,10 @@ int main(int argc, char *argv[]) {
         printf("An error occurs creating makefile\n");
         return 1;
       }
+
+      char git_cmd[512];
+      snprintf(git_cmd, sizeof(git_cmd), "git -C %s init -b main", argv[2]);
+      system(git_cmd);
     }
     printf("%s was created!\n", argv[2]);
     return 0;
