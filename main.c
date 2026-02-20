@@ -34,7 +34,7 @@ int main_file(const char *project_name) {
   FILE *f = fopen(main_path, "w");
 
   if (f == NULL) {
-    cinit_put_str_color("Error creating main.c\n", 1);
+    cinit_put_str_color("Error creating main.c\n", CINIT_COLOR_RED);
     return 1;
   }
 
@@ -54,7 +54,7 @@ int readme(const char *project_name) {
   FILE *f = fopen(readme_path, "w");
 
   if (f == NULL) {
-    cinit_put_str_color("Error creating README.md\n", 1);
+    cinit_put_str_color("Error creating README.md\n", CINIT_COLOR_RED);
     return 1;
   }
 
@@ -71,7 +71,7 @@ int gitignore(const char *project_name) {
   FILE *f = fopen(ignore_path, "w");
 
   if (f == NULL) {
-    cinit_put_str_color("Error creating gitignore\n", 1);
+    cinit_put_str_color("Error creating gitignore\n", CINIT_COLOR_RED);
     return 1;
   }
 
@@ -87,7 +87,7 @@ int makefile(const char *project_name) {
   FILE *f = fopen(make_path, "w");
 
   if (f == NULL) {
-    cinit_put_str_color("Error creating Makefile\n", 1);
+    cinit_put_str_color("Error creating Makefile\n", CINIT_COLOR_RED);
     return 1;
   }
 
@@ -108,14 +108,14 @@ int main(int argc, char *argv[]) {
     if (strcmp(argv[1], "new") == 0) {
       size_t length = strlen(argv[2]);
       if (length <= 3) {
-        cinit_put_str_color("Your project name needs to be longer than 3\n", 1);
+        cinit_put_str_color("Your project name needs to be longer than 3\n", CINIT_COLOR_RED);
         return 1;
       }
 
       // creating dir
       int dir = mkdir(argv[2], 0755);
       if (dir != 0) {
-        cinit_put_str_color("An error occurs creating your project\n", 1);
+        cinit_put_str_color("An error occurs creating your project\n", CINIT_COLOR_RED);
         return 1;
       }
       char src_path[256];
@@ -125,27 +125,27 @@ int main(int argc, char *argv[]) {
       // creating main
       int mf = main_file(argv[2]);
       if (mf != 0) {
-        cinit_put_str_color("An error occurs creating your main file\n", 1);
+        cinit_put_str_color("An error occurs creating your main file\n", CINIT_COLOR_RED);
         return 1;
       }
       // creating readme
       int rm = readme(argv[2]);
       if (rm != 0) {
-        cinit_put_str_color("An error occurs creating your Readme\n", 1);
+        cinit_put_str_color("An error occurs creating your Readme\n", CINIT_COLOR_RED);
         return 1;
       }
 
       // creating ignore
       int ig = gitignore(argv[2]);
       if (ig != 0) {
-        cinit_put_str_color("An error occurs creating gitignore\n", 1);
+        cinit_put_str_color("An error occurs creating gitignore\n", CINIT_COLOR_RED);
         return 1;
       }
 
       // creating makefile
       int mk = makefile(argv[2]);
       if (mk != 0) {
-        cinit_put_str_color("An error occurs creating makefile\n", 1);
+        cinit_put_str_color("An error occurs creating makefile\n", CINIT_COLOR_RED);
         return 1;
       }
     }
@@ -154,8 +154,8 @@ int main(int argc, char *argv[]) {
     cinit_put_str_color(success_msg, CINIT_COLOR_GREEN);
     return 0;
   } else {
-    cinit_put_str_color("Arguments are required for creating a new project\n", 1);
-    cinit_put_str_color("Try: cinit new project_name\n", 1);
+    cinit_put_str_color("Arguments are required for creating a new project\n", CINIT_COLOR_RED);
+    cinit_put_str_color("Try: cinit new project_name\n", CINIT_COLOR_RED);
     return 1;
   }
 }
