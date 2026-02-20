@@ -81,7 +81,7 @@ int makefile(const char *project_name) {
   return 0;
 }
 
-void print_help_cmd(){
+void print_help_cmd(void){
   printf("Usage:\n");
   printf("  cinit <command> [arguments] \n");
   printf("  cinit [options] \n\n");
@@ -89,7 +89,7 @@ void print_help_cmd(){
   printf("  new <project_name> Initialize a new project with the specified name. \n\n");
   printf("Options:\n");
   printf("  --help             Show this help message and exit.\n");
-  printf("  --version          Print the current version fo cinit.\n");
+  printf("  --version          Print the current version of cinit.\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -154,7 +154,7 @@ int main(int argc, char *argv[]) {
       print_help_cmd();
       return 0;
     } else {
-      printf("Error: unreognized subcommand '%s'\n\n", argv[1]);
+      printf("Error: unrecognized subcommand '%s'\n\n", argv[1]);
       printf("Usage: cinit <command> [arguments]\n\n");
       printf("For more information, try '--help'.\n");
     }
