@@ -2,6 +2,7 @@
 // Author: Antonio Souza
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -27,6 +28,8 @@ void cinit_put_str_color(const char *str, cinit_color_t color)
 {
     printf("%s%s\033[0m", cinit_color_to_ansi(color), str);
 }
+
+#define CINIT_VERSION "0.1.0"
 
 int main_file(const char *project_name) {
   char main_path[256];
@@ -101,6 +104,17 @@ int makefile(const char *project_name) {
   return 0;
 }
 
+void print_help_cmd(void){
+  printf("Usage:\n");
+  printf("  cinit <command> [arguments] \n");
+  printf("  cinit [options] \n\n");
+  printf("Commands:\n");
+  printf("  new <project_name> Initialize a new project with the specified name. \n\n");
+  printf("Options:\n");
+  printf("  --help             Show this help message and exit.\n");
+  printf("  --version          Print the current version of cinit.\n");
+}
+
 int main(int argc, char *argv[]) {
 
   if (argc >= 3) {
@@ -148,6 +162,10 @@ int main(int argc, char *argv[]) {
         cinit_put_str_color("An error occurs creating makefile\n", CINIT_COLOR_RED);
         return 1;
       }
+
+      char git_cmd[512];
+      snprintf(git_cmd, sizeof(git_cmd), "git -C %s init -b main", argv[2]);
+      system(git_cmd);
     }
     char success_msg[256];
     snprintf(success_msg, sizeof(success_msg), "%s was created!\n", argv[2]);
@@ -156,6 +174,22 @@ int main(int argc, char *argv[]) {
   } else {
     cinit_put_str_color("Arguments are required for creating a new project\n", CINIT_COLOR_RED);
     cinit_put_str_color("Try: cinit new project_name\n", CINIT_COLOR_RED);
+  } else if (argc == 2){
+    if(strcmp(argv[1], "--version") == 0){
+      printf("cinit version %s\n", CINIT_VERSION);
+      return 0;
+    } else if (strcmp(argv[1], "--help") == 0){
+      print_help_cmd();
+      return 0;
+    } else {
+      printf("Error: unrecognized subcommand '%s'\n\n", argv[1]);
+      printf("Usage: cinit <command> [arguments]\n\n");
+      printf("For more information, try '--help'.\n");
+    }
+  }
+  else {
+    printf("Arguments are required for creating a new project\n");
+    printf("Try: cinit new project_name\n");
     return 1;
   }
 }
