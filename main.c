@@ -6,6 +6,8 @@
 #include <string.h>
 #include <sys/stat.h>
 
+#define CINIT_VERSION "0.1.0"
+
 int main_file(const char *project_name) {
   char main_path[256];
   snprintf(main_path, sizeof(main_path), "%s/src/main.c", project_name);
@@ -79,6 +81,17 @@ int makefile(const char *project_name) {
   return 0;
 }
 
+void print_help_cmd(void){
+  printf("Usage:\n");
+  printf("  cinit <command> [arguments] \n");
+  printf("  cinit [options] \n\n");
+  printf("Commands:\n");
+  printf("  new <project_name> Initialize a new project with the specified name. \n\n");
+  printf("Options:\n");
+  printf("  --help             Show this help message and exit.\n");
+  printf("  --version          Print the current version of cinit.\n");
+}
+
 int main(int argc, char *argv[]) {
 
   if (argc >= 3) {
@@ -133,8 +146,20 @@ int main(int argc, char *argv[]) {
     }
     printf("%s was created!\n", argv[2]);
     return 0;
-  } else {
-
+  } else if (argc == 2){
+    if(strcmp(argv[1], "--version") == 0){
+      printf("cinit version %s\n", CINIT_VERSION);
+      return 0;
+    } else if (strcmp(argv[1], "--help") == 0){
+      print_help_cmd();
+      return 0;
+    } else {
+      printf("Error: unrecognized subcommand '%s'\n\n", argv[1]);
+      printf("Usage: cinit <command> [arguments]\n\n");
+      printf("For more information, try '--help'.\n");
+    }
+  }
+  else {
     printf("Arguments are required for creating a new project\n");
     printf("Try: cinit new project_name\n");
     return 1;
