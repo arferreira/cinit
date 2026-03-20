@@ -171,9 +171,6 @@ int main(int argc, char *argv[]) {
     snprintf(success_msg, sizeof(success_msg), "%s was created!\n", argv[2]);
     cinit_put_str_color(success_msg, CINIT_COLOR_GREEN);
     return 0;
-  } else {
-    cinit_put_str_color("Arguments are required for creating a new project\n", CINIT_COLOR_RED);
-    cinit_put_str_color("Try: cinit new project_name\n", CINIT_COLOR_RED);
   } else if (argc == 2){
     if(strcmp(argv[1], "--version") == 0){
       printf("cinit version %s\n", CINIT_VERSION);
@@ -186,10 +183,9 @@ int main(int argc, char *argv[]) {
       printf("Usage: cinit <command> [arguments]\n\n");
       printf("For more information, try '--help'.\n");
     }
-  }
-  else {
-    printf("Arguments are required for creating a new project\n");
-    printf("Try: cinit new project_name\n");
+  } else {
+    cinit_put_str_color("Arguments are required for creating a new project\n", CINIT_COLOR_RED);
+    cinit_put_str_color("Try: cinit new project_name\n", CINIT_COLOR_RED);
     return 1;
   }
 }
