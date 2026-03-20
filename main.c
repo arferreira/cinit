@@ -78,7 +78,8 @@ int gitignore(const char *project_name) {
     return 1;
   }
 
-  fprintf(f, "*.o");
+  fprintf(f, "*.o\n");
+  fprintf(f, "%s\n", project_name);
   fclose(f);
   return 0;
 }
