@@ -1,5 +1,6 @@
 // This is a tool created to start C projects like cargo new or smith for C++
 // Author: Antonio Souza
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,6 +31,12 @@ void cinit_put_str_color(const char *str, cinit_color_t color)
 }
 
 #define CINIT_VERSION "0.1.0"
+
+bool validate_project_name(const char *project_name) {
+    const char *allowed_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-";
+    size_t len = strlen(project_name);
+    return ((len > 0) && (strspn(project_name, allowed_chars) == len));
+}
 
 int main_file(const char *project_name) {
   char main_path[256];
@@ -123,6 +130,11 @@ int main(int argc, char *argv[]) {
       size_t length = strlen(argv[2]);
       if (length <= 3) {
         cinit_put_str_color("Your project name needs to be longer than 3\n", CINIT_COLOR_RED);
+        return 1;
+      }
+
+      if(!validate_project_name(argv[2])) {
+        cinit_put_str_color("Your project name should use alphanumeric (A-Z, a-z, 0-9), underscore (_) or hyphen (-) characters only \n", CINIT_COLOR_RED);
         return 1;
       }
 
